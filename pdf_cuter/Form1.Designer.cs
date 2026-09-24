@@ -49,6 +49,7 @@ namespace PDFCutter
             this.btnExtract = new System.Windows.Forms.Button();
             this.btnConvertToImage = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnMergePdf = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -319,13 +320,29 @@ namespace PDFCutter
             this.btnClear.Text = "清除";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
+            //
+            // btnMergePdf
+            //
+            this.btnMergePdf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
+            this.btnMergePdf.FlatAppearance.BorderSize = 0;
+            this.btnMergePdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMergePdf.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnMergePdf.ForeColor = System.Drawing.Color.White;
+            this.btnMergePdf.Location = new System.Drawing.Point(12, 441);
+            this.btnMergePdf.Name = "btnMergePdf";
+            this.btnMergePdf.Size = new System.Drawing.Size(560, 40);
+            this.btnMergePdf.TabIndex = 7;
+            this.btnMergePdf.Text = "合併多個 PDF 檔案";
+            this.btnMergePdf.UseVisualStyleBackColor = false;
+            this.btnMergePdf.Click += new System.EventHandler(this.btnMergePdf_Click);
+            //
             // Form1
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(584, 450);
+            this.ClientSize = new System.Drawing.Size(584, 493);
+            this.Controls.Add(this.btnMergePdf);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnConvertToImage);
             this.Controls.Add(this.btnExtract);
@@ -373,5 +390,6 @@ namespace PDFCutter
         private ComboBox cmbDpi;
         private Label label5;
         private Button btnConvertToImage;
+        private Button btnMergePdf;
     }
 } 

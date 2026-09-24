@@ -229,36 +229,43 @@ namespace PDFCutter
                 return;
             }
 
-            // 選擇輸出資料夾
-            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            string baseFolder;
+
+            if (chkSameFolder.Checked)
             {
-                folderDialog.Description = "選擇圖片輸出資料夾";
-                
-                // 預設使用輸入檔案的目錄
-                if (!string.IsNullOrEmpty(txtInputFile.Text))
+                // 與輸入檔案同資料夾，不再詢問輸出位置
+                baseFolder = Path.GetDirectoryName(txtInputFile.Text);
+            }
+            else
+            {
+                // 選擇輸出資料夾
+                using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
                 {
+                    folderDialog.Description = "選擇圖片輸出資料夾";
                     folderDialog.SelectedPath = Path.GetDirectoryName(txtInputFile.Text);
-                }
 
-                if (folderDialog.ShowDialog() != DialogResult.OK)
-                    return;
+                    if (folderDialog.ShowDialog() != DialogResult.OK)
+                        return;
 
-                try
-                {
-                    // 建立以原檔名命名的子資料夾
-                    string baseFileName = Path.GetFileNameWithoutExtension(txtInputFile.Text);
-                    string outputFolder = Path.Combine(folderDialog.SelectedPath, baseFileName);
-                    Directory.CreateDirectory(outputFolder);
+                    baseFolder = folderDialog.SelectedPath;
+                }
+            }
 
-                    ConvertPdfToImages(txtInputFile.Text, outputFolder, txtPageRange.Text);
-                    MessageBox.Show($"PDF 轉圖檔完成！\n輸出至: {outputFolder}", "成功",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"轉換圖檔時發生錯誤: {ex.Message}", "錯誤",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            try
+            {
+                // 建立以原檔名命名的子資料夾
+                string baseFileName = Path.GetFileNameWithoutExtension(txtInputFile.Text);
+                string outputFolder = Path.Combine(baseFolder, baseFileName);
+                Directory.CreateDirectory(outputFolder);
+
+                ConvertPdfToImages(txtInputFile.Text, outputFolder, txtPageRange.Text);
+                MessageBox.Show($"PDF 轉圖檔完成！\n輸出至: {outputFolder}", "成功",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"轉換圖檔時發生錯誤: {ex.Message}", "錯誤",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -328,6 +335,14 @@ namespace PDFCutter
                         }
                     }
                 }
+            }
+        }
+
+        private void btnMergePdf_Click(object sender, EventArgs e)
+        {
+            using (MergeForm mergeForm = new MergeForm())
+            {
+                mergeForm.ShowDialog(this);
             }
         }
 
